@@ -1,6 +1,16 @@
+const rupture = require('rupture');
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
+    title: 'Fun with Ascii and Kaomoji',
   },
-  plugins: [`gatsby-plugin-react-helmet`],
+
+  plugins: [
+    'gatsby-plugin-react-helmet',
+    {
+      resolve: 'gatsby-plugin-stylus',
+      options: {
+        use: [rupture()],
+      },
+    },
+  ],
 }
