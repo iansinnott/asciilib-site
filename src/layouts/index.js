@@ -1,62 +1,35 @@
-import React from "react"
-import PropTypes from "prop-types"
-import Link from "gatsby-link"
-import Helmet from "react-helmet"
+import React from 'react';
+import PropTypes from 'prop-types';
+import Link from 'gatsby-link';
+import Helmet from 'react-helmet';
+import classnames from 'classnames/bind';
 
-import "../css/typography.css"
+import '../css/typography.css';
+import s from './App.module.styl';
+const cx = classnames.bind(s);
+import exposeGlobals from '../lib/exposeGlobals.js';
+
+if (process.env.NODE_ENV === 'development') {
+  exposeGlobals(window);
+}
 
 export default class Template extends React.Component {
   static propTypes = {
     children: PropTypes.func,
-  }
+  };
 
   render() {
     return (
-      <div>
+      <div className={cx('App')}>
         <Helmet
-          title="Gatsby Default Starter"
+          title='A library of ascii faces and kaomoji (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧'
           meta={[
-            { name: "description", content: "Sample" },
-            { name: "keywords", content: "sample, something" },
+            { name: 'description', content: 'Sample' },
+            { name: 'keywords', content: 'ascii-art, kaomoji' },
           ]}
         />
-        <div
-          style={{
-            background: `rebeccapurple`,
-            marginBottom: `1.45rem`,
-          }}
-        >
-          <div
-            style={{
-              margin: `0 auto`,
-              maxWidth: 960,
-              padding: `1.45rem 1.0875rem`,
-            }}
-          >
-            <h1 style={{ margin: 0 }}>
-              <Link
-                to="/"
-                style={{
-                  color: "white",
-                  textDecoration: "none",
-                }}
-              >
-                Gatsby
-              </Link>
-            </h1>
-          </div>
-        </div>
-        <div
-          style={{
-            margin: `0 auto`,
-            maxWidth: 960,
-            padding: `0px 1.0875rem 1.45rem`,
-            paddingTop: 0,
-          }}
-        >
-          {this.props.children()}
-        </div>
+        {this.props.children()}
       </div>
-    )
+    );
   }
 }
