@@ -43,13 +43,28 @@ class VirtualizedList extends React.Component {
   }
 }
 
+const focusElement = el => el && el.focus();
+
 export default class Index extends React.Component {
   state = {
     items: Object.values(lib),
   };
 
+  searchTerm$ = new Subject();
+
   handleChange = (e) => {
-    console.log(e.target.value);
+    this.searchTerm$.next(e.target.value);
+  };
+
+  componentDidMount() {
+    this.sub = this.searchTerm$
+      .debounceTime(50)
+      .mergeMap(x => find(x).toArray())
+      .subscribe(items => this.setState({ items }));
+  }
+
+  componentWillUnmount() {
+    if (this.sub) this.sub.unsubscribe();
   }
 
   render() {
@@ -57,6 +72,7 @@ export default class Index extends React.Component {
       <div className={cx('Index')}>
         <h1><strong>Acii</strong>lib Search</h1>
         <input
+          ref={focusElement}
           placeholder='Search...'
           onChange={this.handleChange}
           className={cx('input')} />

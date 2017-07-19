@@ -23,6 +23,8 @@ normalize-input()
 .flexHeight
   flex 1 100%
 
+$blue = transparentify(blue, 0.4)
+
 .input
   normalize-input()
   width 100%
@@ -31,3 +33,6 @@ normalize-input()
   padding 10px 20px
   border 1px solid #ddd
   margin-bottom 20px
+  &:focus
+    box-shadow inset 0 0px 0px 1px $blue, 0 0px 5px $blue
+    border-color $blue
