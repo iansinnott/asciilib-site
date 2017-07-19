@@ -4,7 +4,7 @@ import Helmet from "react-helmet"
 import classnames from 'classnames/bind';
 import { lib } from 'asciilib';
 import find from 'asciilib/find';
-import { Subject } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
 import { AutoSizer, List } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 import Clipboard from 'clipboard';
@@ -12,18 +12,41 @@ import Clipboard from 'clipboard';
 import s from './Index.module.styl';
 const cx = classnames.bind(s);
 
-const Kaomoji = ({ item }) => (
-  <div className={cx('Kaomoji')}>
-    <h4 style={{ margin: 0 }}>{item.name}</h4>
-    <p className={cx('clippable')}>
-      {item.entry}
-    </p>
-    <button className={cx('copyToClick')} data-clipboard-text={item.entry}>
-      <i style={{ marginRight: 10 }} className='fa fa-clipboard'></i>
-      Copy
-    </button>
-  </div>
-);
+class Kaomoji extends React.Component {
+  state = {
+    justClicked: false,
+  };
+
+  handleClick = () => {
+    this.setState({ justClicked: true });
+    this.sub = Observable.timer(700).subscribe(() => this.setState({ justClicked: false }));
+  };
+
+  componentWillUnmount() {
+    if (this.sub) this.sub.unsubscribe();
+  }
+
+  render() {
+    const { item } = this.props;
+    return (
+      <div className={cx('Kaomoji')}>
+        <h4 style={{ margin: 0 }}>{item.name}</h4>
+        <p className={cx('clippable')}>
+          {item.entry}
+        </p>
+        <button
+          onClick={this.handleClick}
+          className={cx('copyToClick', {
+            anime: this.state.justClicked,
+          })}
+          data-clipboard-text={item.entry}>
+          <i style={{ marginRight: 10 }} className='fa fa-clipboard'></i>
+          Copy
+        </button>
+      </div>
+    );
+  }
+}
 
 class VirtualizedList extends React.Component {
   renderRow = ({ key, index, style }) => (

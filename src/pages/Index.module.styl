@@ -7,6 +7,9 @@ normalize-input()
   border none
 
 .Index
+  margin 0 auto
+  width 100%
+  max-width 760px
   padding 40px
   height 100%
   display flex
@@ -78,3 +81,24 @@ $teal = #36e7a7
 
   i
     color $teal
+
+@keyframes spread-out
+  from
+    opacity 1
+    transform scale(1)
+  to
+    opacity 0
+    transform scale(1.4, 1.8)
+
+.anime
+  &:after
+    content ''
+    position absolute
+    border-radius 3px
+    top 0
+    left 0
+    right 0
+    bottom 0
+    background transparent
+    border 1px solid #533dff
+    animation spread-out 0.7s ease
