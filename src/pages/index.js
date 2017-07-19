@@ -18,12 +18,17 @@ class Kaomoji extends React.Component {
   };
 
   handleClick = () => {
+    this.cleanup();
     this.setState({ justClicked: true });
     this.sub = Observable.timer(700).subscribe(() => this.setState({ justClicked: false }));
   };
 
-  componentWillUnmount() {
+  cleanup = () => {
     if (this.sub) this.sub.unsubscribe();
+  };
+
+  componentWillUnmount() {
+    this.cleanup();
   }
 
   render() {
