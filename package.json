@@ -27,9 +27,8 @@
   "main": "n/a",
   "scripts": {
     "build": "gatsby build",
-    "deploy": "surge public asciilib.iansinnott.com",
+    "deploy": "gatsby build --prefix-paths && surge public asciilib.iansinnott.com",
     "start": "gatsby develop",
-    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "develop": "gatsby develop",
     "format": "prettier --trailing-comma es5 --no-semi --single-quote --write \"pages/*.js\" \"utils/*.js\" \"wrappers/*.js\" \"html.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
