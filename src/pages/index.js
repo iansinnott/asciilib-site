@@ -7,6 +7,7 @@ import find from 'asciilib/find';
 import { Subject } from 'rxjs';
 import { AutoSizer, List } from 'react-virtualized';
 import 'react-virtualized/styles.css';
+import Clipboard from 'clipboard';
 
 import s from './Index.module.styl';
 const cx = classnames.bind(s);
@@ -14,7 +15,13 @@ const cx = classnames.bind(s);
 const Kaomoji = ({ item }) => (
   <div className={cx('Kaomoji')}>
     <h4 style={{ margin: 0 }}>{item.name}</h4>
-    {item.entry}
+    <p className={cx('clippable')}>
+      {item.entry}
+    </p>
+    <button className={cx('copyToClick')} data-clipboard-text={item.entry}>
+      <i style={{ marginRight: 10 }} className='fa fa-clipboard'></i>
+      Copy
+    </button>
   </div>
 );
 
@@ -25,6 +32,14 @@ class VirtualizedList extends React.Component {
     </div>
   );
 
+  componentDidMount() {
+    this.clipboard = new Clipboard('.' + cx('copyToClick'));
+  }
+
+  componentWillUnmount() {
+    this.clipboard.destroy();
+  }
+
   render() {
     const { items } = this.props;
     return (
@@ -34,7 +49,7 @@ class VirtualizedList extends React.Component {
             width={width}
             height={height}
             rowCount={items.length}
-            rowHeight={60}
+            rowHeight={73}
             rowRenderer={this.renderRow}
           />
         )}
@@ -75,7 +90,8 @@ export default class Index extends React.Component {
           ref={focusElement}
           placeholder='Search...'
           onChange={this.handleChange}
-          className={cx('input')} />
+          className={cx('input')}
+        />
         <div className={cx('flexHeight')}>
           <VirtualizedList items={this.state.items} />
         </div>

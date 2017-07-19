@@ -6,6 +6,8 @@
   "dependencies": {
     "asciilib": "^0.3.2",
     "classnames": "^2.2.5",
+    "clipboard": "^1.7.1",
+    "font-awesome": "^4.7.0",
     "gatsby": "^1.2.0",
     "gatsby-link": "^1.0.9",
     "gatsby-plugin-react-helmet": "^1.0.1",
