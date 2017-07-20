@@ -10,6 +10,7 @@
     "font-awesome": "^4.7.0",
     "gatsby": "^1.2.0",
     "gatsby-link": "^1.0.9",
+    "gatsby-plugin-google-analytics": "^1.0.1",
     "gatsby-plugin-react-helmet": "^1.0.1",
     "gatsby-plugin-stylus": "^1.1.0",
     "react-virtualized": "^9.9.0",

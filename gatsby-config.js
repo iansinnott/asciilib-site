@@ -12,5 +12,11 @@ module.exports = {
         use: [rupture()],
       },
     },
+    {
+      resolve: `gatsby-plugin-google-analytics`,
+      options: {
+        trackingId: 'UA-36494368-4',
+      },
+    },
   ],
 }
