@@ -10,12 +10,12 @@ normalize-input()
   margin 0 auto
   width 100%
   max-width 760px
-  padding 40px
+  padding 20px
   height 100%
   display flex
   flex-direction column
   +below(500px)
-    padding 20px
+    padding 10px
 
   h1
     text-align center
@@ -102,3 +102,13 @@ $teal = #36e7a7
     background transparent
     border 1px solid #533dff
     animation spread-out 0.7s ease
+
+.poweredBy
+  text-align center
+  font-style italic
+  margin-bottom 20px
+
+.fork
+  +below(500px)
+    img
+      transform scale(0.8) translate(20%, -20%)
