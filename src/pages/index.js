@@ -12,6 +12,11 @@ import Clipboard from 'clipboard';
 import s from './Index.module.styl';
 const cx = classnames.bind(s);
 
+/**
+ * Will not throw if passed void.
+ */
+const toLower = x => x ? x.toLowerCase() : '';
+
 class Kaomoji extends React.Component {
   state = {
     justClicked: false,
@@ -102,6 +107,7 @@ export default class Index extends React.Component {
   componentDidMount() {
     this.sub = this.searchTerm$
       .debounceTime(50)
+      .map(toLower)
       .mergeMap(x => find(x).toArray())
       .subscribe(items => this.setState({ items }));
   }
