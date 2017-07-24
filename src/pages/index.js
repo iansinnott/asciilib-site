@@ -9,6 +9,9 @@ import { AutoSizer, List } from 'react-virtualized';
 import 'react-virtualized/styles.css';
 import Clipboard from 'clipboard';
 
+const values = (obj) =>
+  Object.keys(obj).reduce((vals, k) => vals.concat([obj[k]]), []);
+
 import s from './Index.module.styl';
 const cx = classnames.bind(s);
 
@@ -95,7 +98,7 @@ const focusElement = el => el && el.focus();
 
 export default class Index extends React.Component {
   state = {
-    items: Object.values(lib),
+    items: values(lib),
   };
 
   searchTerm$ = new Subject();
