@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "author": "Kyle Mathews <mathews.kyle@gmail.com>",
   "dependencies": {
-    "asciilib": "^0.3.2",
+    "asciilib": "^0.5.1",
     "classnames": "^2.2.5",
     "clipboard": "^1.7.1",
     "font-awesome": "^4.7.0",
