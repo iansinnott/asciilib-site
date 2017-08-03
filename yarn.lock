@@ -189,9 +189,9 @@ asap@~2.0.3:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
 
-asciilib@^0.6.1:
-  version "0.6.1"
-  resolved "https://registry.yarnpkg.com/asciilib/-/asciilib-0.6.1.tgz#0d42267819a297629895ed0987c780cbf92bb276"
+asciilib@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/asciilib/-/asciilib-0.7.0.tgz#2ceb9ffdc2baf5ba2d6a54dc312a0a08f05000b0"
   dependencies:
     common-tags "^1.4.0"
     ramda "^0.24.1"

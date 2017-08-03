@@ -8,7 +8,7 @@
     "url": "https://github.com/iansinnott/asciilib-site.git"
   },
   "dependencies": {
-    "asciilib": "^0.6.1",
+    "asciilib": "^0.7.0",
     "classnames": "^2.2.5",
     "clipboard": "^1.7.1",
     "font-awesome": "^4.7.0",
