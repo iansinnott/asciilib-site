@@ -189,9 +189,9 @@ asap@~2.0.3:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/asap/-/asap-2.0.6.tgz#e50347611d7e690943208bbdafebcbc2fb866d46"
 
-asciilib@^0.5.1:
-  version "0.5.1"
-  resolved "https://registry.yarnpkg.com/asciilib/-/asciilib-0.5.1.tgz#78bee87ca3ad40ac815a7ca7c6c13ef0c8f0fb62"
+asciilib@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/asciilib/-/asciilib-0.7.0.tgz#2ceb9ffdc2baf5ba2d6a54dc312a0a08f05000b0"
   dependencies:
     common-tags "^1.4.0"
     ramda "^0.24.1"
@@ -905,7 +905,7 @@ babel-polyfill@^6.23.0:
     core-js "^2.4.0"
     regenerator-runtime "^0.10.0"
 
-babel-preset-env@^1.5.2:
+babel-preset-env@^1.6.0:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/babel-preset-env/-/babel-preset-env-1.6.0.tgz#2de1c782a780a0a5d605d199c957596da43c44e4"
   dependencies:
@@ -2770,9 +2770,9 @@ function-bind@^1.0.2:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.0.tgz#16176714c801798e4e8f2cf7f7529467bb4a5771"
 
-gatsby-link@^1.0.9:
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/gatsby-link/-/gatsby-link-1.0.9.tgz#5966555f7b60ebf407839e5681e296b5165bec21"
+gatsby-link@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/gatsby-link/-/gatsby-link-1.3.2.tgz#5b333e9776b80a2ff7e1ee0a21c770800e7d5b17"
   dependencies:
     prop-types "^15.5.8"
     ric "^1.3.0"
@@ -2796,16 +2796,16 @@ gatsby-plugin-stylus@^1.1.0:
     stylus "^0.54.5"
     stylus-loader webpack1
 
-gatsby@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-1.2.0.tgz#55a15500f7de9f792c30c82f2b93ff89517b610a"
+gatsby@^1.3.2:
+  version "1.3.2"
+  resolved "https://registry.yarnpkg.com/gatsby/-/gatsby-1.3.2.tgz#b485d1cb7644473b8049b72df002eeb73f00356e"
   dependencies:
     async "^2.1.2"
     babel-core "^6.24.1"
     babel-loader "^6.0.0"
     babel-plugin-add-module-exports "^0.2.1"
     babel-plugin-transform-object-assign "^6.8.0"
-    babel-preset-env "^1.5.2"
+    babel-preset-env "^1.6.0"
     babel-preset-es2015 "^6.24.1"
     babel-preset-react "^6.24.1"
     babel-preset-stage-0 "^6.24.1"
