@@ -1,86 +1,181 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
+import type { NextPage } from "next";
+import React from "react";
+import classnames from "classnames";
+import { lib } from "asciilib";
+import find from "asciilib/find";
+import { Subject, Observable, Subscription } from "rxjs";
+import { AutoSizer, List } from "react-virtualized";
+import "react-virtualized/styles.css";
+import Clipboard from "clipboard";
 
-const Home: NextPage = () => {
-  return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+/**
+ * Will not throw if passed void.
+ */
+const toLower = (x: string | null | undefined) => (x ? x.toLowerCase() : "");
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://nextjs.org">
-            Next.js!
-          </a>
-        </h1>
+class Kaomoji extends React.Component {
+  state = {
+    justClicked: false,
+  };
 
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
-            pages/index.tsx
-          </code>
-        </p>
+  sub: Subscription | null = null;
 
-        <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and its API.
-            </p>
-          </a>
+  handleClick = () => {
+    this.cleanup();
+    this.setState({ justClicked: true });
+    this.sub = Observable.timer(700).subscribe(() => this.setState({ justClicked: false }));
+  };
 
-          <a
-            href="https://nextjs.org/learn"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
+  cleanup = () => {
+    if (this.sub) this.sub.unsubscribe();
+  };
 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
+  componentWillUnmount() {
+    this.cleanup();
+  }
 
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
-      </main>
-
-      <footer className="flex h-24 w-full items-center justify-center border-t">
-        <a
-          className="flex items-center justify-center gap-2"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+  render() {
+    /* @ts-ignore */
+    const { item } = this.props;
+    return (
+      <div className={classnames("Kaomoji")}>
+        <h4 style={{ margin: 0 }}>{item.name}</h4>
+        <p className={classnames("clippable")}>{item.entry}</p>
+        <button
+          onClick={this.handleClick}
+          className={classnames("copyToClick flex", {
+            anime: this.state.justClicked,
+          })}
+          data-clipboard-text={item.entry}
         >
-          Powered by{' '}
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-        </a>
-      </footer>
-    </div>
-  )
+          <ClipboardIcon style={{ marginRight: 10 }} />
+          Copy
+        </button>
+      </div>
+    );
+  }
 }
 
-export default Home
+class VirtualizedList extends React.Component {
+  clipboard: Clipboard | null = null;
+
+  renderRow = ({ key, index, style }) => (
+    <div key={key} style={style}>
+      {/* @ts-ignore */}
+      <Kaomoji item={this.props.items[index]} />
+    </div>
+  );
+
+  componentDidMount() {
+    this.clipboard = new Clipboard("." + classnames("copyToClick"));
+  }
+
+  componentWillUnmount() {
+    this.clipboard?.destroy();
+  }
+
+  render() {
+    // @ts-ignore
+    const { items } = this.props;
+    return (
+      <AutoSizer>
+        {({ width, height }) => (
+          <List
+            width={width}
+            height={height}
+            rowCount={items.length}
+            rowHeight={73}
+            rowRenderer={this.renderRow}
+          />
+        )}
+      </AutoSizer>
+    );
+  }
+}
+
+const focusElement = (el) => el && el.focus();
+
+class Index extends React.Component {
+  state = {
+    items: Object.values(lib),
+  };
+
+  searchTerm$: Subject<string | null | undefined> = new Subject();
+
+  sub: Subscription | null = null;
+
+  handleChange = (e) => {
+    this.searchTerm$.next(e.target.value);
+  };
+
+  componentDidMount() {
+    this.sub = this.searchTerm$
+      .debounceTime(50)
+      .map(toLower)
+      .mergeMap((x) => find(x).toArray())
+      .subscribe((items) => this.setState({ items }));
+  }
+
+  componentWillUnmount() {
+    if (this.sub) this.sub.unsubscribe();
+  }
+
+  render() {
+    return (
+      <div className={classnames("Index")}>
+        <h1 style={{ marginBottom: 0 }}>
+          <strong>Acii</strong>lib Search
+        </h1>
+        <small className={classnames("poweredBy")}>
+          Powered by <a href="https://github.com/iansinnott/asciilib">asciilib</a>
+        </small>
+        <input
+          ref={focusElement}
+          placeholder="Search..."
+          onChange={this.handleChange}
+          className={classnames("input")}
+        />
+        <div className={classnames("flexHeight")}>
+          {/* @ts-ignore */}
+          <VirtualizedList items={this.state.items} />
+        </div>
+        <a className={classnames("fork")} href="https://github.com/iansinnott/asciilib-site">
+          <img
+            src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
+            alt="Fork me on GitHub"
+            data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"
+            style={{
+              position: "absolute",
+              top: 0,
+              right: 0,
+              border: 0,
+            }}
+          />
+        </a>
+      </div>
+    );
+  }
+}
+
+export default Index;
+
+interface IClipboardIcon extends React.ComponentProps<"svg"> {}
+export const ClipboardIcon = ({ className, ...props }: IClipboardIcon) => {
+  return (
+    <div>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        fill="currentColor"
+        viewBox="0 0 16 16"
+        data-test-id="ClipboardIcon"
+        className={classnames("", className)}
+        {...props}
+      >
+        <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"></path>
+        <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"></path>
+      </svg>
+    </div>
+  );
+};

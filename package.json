@@ -6,10 +6,16 @@
     "start": "next start"
   },
   "dependencies": {
+    "@types/react-helmet": "~6.1.5",
+    "asciilib": "~1.0.1",
     "classnames": "~2.3.2",
+    "clipboard": "~2.0.11",
     "next": "13.0.3",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "react-helmet": "~6.1.0",
+    "react-virtualized": "^9.9.0",
+    "rxjs": "^5.4.2"
   },
   "devDependencies": {
     "@types/node": "18.11.3",

@@ -1,3 +1,174 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  min-width: 320px;
+}
+
+.App {
+  min-width: 320px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.ReactVirtualized__Grid {
+  outline: none;
+}
+
+.Index {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 760px;
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* media query for less than 500px */
+@media (max-width: 500px) {
+  .Index {
+    padding: 10px;
+  }
+}
+
+.Index h1 {
+  text-align: center;
+  font-weight: 300;
+}
+.Index h1 strong {
+  font-weight: bold;
+}
+.flexHeight {
+  flex: 1 100%;
+}
+.input {
+  outline: none;
+  appearance: none;
+  border: none;
+  width: calc(100% - 20px);
+  margin: 0 auto;
+  font-size: 24px;
+  border-radius: 24px;
+  padding: 10px 20px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+.input:focus {
+  box-shadow: inset 0 0px 0px 1px #36e7a7, 0 0px 5px #36e7a7;
+  border-color: #36e7a7;
+}
+.Kaomoji {
+  position: relative;
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+.Kaomoji:hover {
+  background: rgba(148, 255, 151, 0.21);
+  border-bottom-color: #36e7a7;
+}
+.Kaomoji:hover .copyToClick {
+  border-color: #36e7a7;
+}
+.Kaomoji p {
+  margin: 0;
+}
+.Kaomoji button {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+}
+.copyToClick {
+  outline: none;
+  appearance: none;
+  border: none;
+  border-radius: 3px;
+  background: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 12px;
+  padding: 8px 14px;
+  color: #666;
+  border: 1px solid #36e7a7;
+}
+.copyToClick:hover {
+  background: #36e7a7;
+  color: #fff;
+}
+.copyToClick:hover i {
+  color: #fff;
+}
+.copyToClick i {
+  color: #36e7a7;
+}
+.anime:after {
+  content: "";
+  position: absolute;
+  border-radius: 3px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  border: 1px solid #533dff;
+  animation: spread-out 0.7s ease;
+}
+.poweredBy {
+  text-align: center;
+  font-style: italic;
+  margin-bottom: 20px;
+}
+@-moz-keyframes spread-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.4, 1.8);
+  }
+}
+@-webkit-keyframes spread-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.4, 1.8);
+  }
+}
+@-o-keyframes spread-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.4, 1.8);
+  }
+}
+@keyframes spread-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.4, 1.8);
+  }
+}
+
+@media (max-width: 500px) {
+  .fork img {
+    transform: scale(0.8) translate(20%, -20%);
+  }
+}
