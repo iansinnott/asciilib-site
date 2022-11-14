@@ -95,7 +95,7 @@ class VirtualizedList extends React.Component {
 
 const focusElement = (el) => el && el.focus();
 
-class Index extends React.Component {
+class Index extends React.Component<Awaited<ReturnType<typeof getStaticProps>>["props"]> {
   state = {
     items: Object.values(lib),
   };
@@ -127,13 +127,16 @@ class Index extends React.Component {
           <strong>Acii</strong>lib Search
         </h1>
         <small className={classnames("poweredBy")}>
-          Powered by <a href="https://github.com/iansinnott/asciilib">asciilib</a>
+          Powered by{" "}
+          <a className="link" href="https://github.com/iansinnott/asciilib">
+            asciilib@{this.props.asciilibVersion}
+          </a>
         </small>
         <input
           ref={focusElement}
           placeholder="Search..."
           onChange={this.handleChange}
-          className={classnames("input")}
+          className={classnames("input rounded-full")}
         />
         <div className={classnames("flexHeight")}>
           {/* @ts-ignore */}
@@ -158,6 +161,14 @@ class Index extends React.Component {
 }
 
 export default Index;
+
+export const getStaticProps = async () => {
+  return {
+    props: {
+      asciilibVersion: require("asciilib/package.json").version,
+    },
+  };
+};
 
 interface IClipboardIcon extends React.ComponentProps<"svg"> {}
 export const ClipboardIcon = ({ className, ...props }: IClipboardIcon) => {
