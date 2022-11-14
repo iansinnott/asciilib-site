@@ -1,6 +1,6 @@
 # asciilib site
 
-The website for [asciilib](https://github.com/iansinnott/asciilib).
+A website to demonstrate [asciilib](https://github.com/iansinnott/asciilib).
 
 👉 <https://asciilib.iansinnott.com/> 👈
 
